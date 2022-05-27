@@ -15,8 +15,10 @@ export default function Home() {
       fetch("https://api.adviceslip.com/advice")
         .then(res => res.json())
         .then(data => {
-          setAdvice({ id: data.slip.id, text: data.slip.advice })
-          setNextAdvice(false)
+          setTimeout(() => {
+            setAdvice({ id: data.slip.id, text: data.slip.advice })
+            setNextAdvice(false)
+          }, 2000)
         })
     }
   }, [nextAdvice])
@@ -33,7 +35,9 @@ export default function Home() {
           <h6 className="font-manrope text-xs font-semibold tracking-[0.3rem] text-[hsl(150,_100%,_66%)]">
             ADVICE #{advice.id}
           </h6>
-          <h1 className="mt-8 text-center text-[1.75rem] font-semibold text-[hsl(193,_38%,_86%)] before:content-['“_'] after:content-['_”']">
+          <h1
+            className={`mt-8 min-h-[8rem] text-center text-[1.75rem] font-extrabold text-[hsl(193,_38%,_86%)] before:content-['“_'] after:content-['_”']`}
+          >
             {advice.text}
           </h1>
           <img
@@ -50,7 +54,11 @@ export default function Home() {
             onClick={() => {
               setNextAdvice(true)
             }}
-            className="absolute bottom-[-1rem] flex h-14 w-14 cursor-pointer items-center justify-center rounded-full bg-[hsl(150,_100%,_66%)] hover:shadow-[0px_0px_20px_2px_hsl(150deg_100%_66%)]"
+            className={`${
+              nextAdvice
+                ? "animate-pulse shadow-[0px_0px_20px_2px_hsl(150deg_100%_66%)]"
+                : "animation-none"
+            } absolute bottom-[-1rem] flex h-14 w-14 cursor-pointer items-center justify-center rounded-full bg-[hsl(150,_100%,_66%)] hover:shadow-[0px_0px_20px_2px_hsl(150deg_100%_66%)]`}
           >
             <img src="icon-dice.svg" alt="" />
           </div>
